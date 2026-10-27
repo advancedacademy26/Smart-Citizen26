@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+}
+
+@layer utilities {
+  .card {
+    @apply rounded-3xl bg-white/80 backdrop-blur-sm shadow-xl shadow-orange-200/40 border border-white;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-orange-300/50 hover:from-orange-600 hover:to-rose-600 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-semibold text-orange-700 border-2 border-orange-300 shadow-sm hover:bg-orange-50 active:scale-[0.98] transition-all;
+  }
+  .section-title {
+    @apply text-2xl md:text-3xl font-black tracking-tight;
+  }
+  .stamp-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .stamp-shine::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 70%
+    );
+    animation: shine 3s infinite;
+  }
+  @keyframes shine {
+    0% { transform: translate(-30%, -30%) rotate(0deg); }
+    100% { transform: translate(30%, 30%) rotate(0deg); }
+  }
+  .bounce-in {
+    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
+  @keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  .confetti-bg {
+    background-image: radial-gradient(circle at 25% 25%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 75% 75%, rgba(244, 63, 94, 0.12) 0%, transparent 50%),
+                      radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+  }
+}
