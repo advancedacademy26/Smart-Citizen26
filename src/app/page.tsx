@@ -8,6 +8,39 @@ import { SCHOOL_NAME, EVENT_NAME, EVENT_SUBTITLE, EVENT_THEME } from "@/lib/bran
 
 const AUTO_REDIRECT_SECONDS = 3;
 
+// When deployed to a GitHub Pages project site, every static asset must be
+// prefixed with "/repo-name" (see next.config.ts + the deploy workflow).
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+/**
+ * Shows the school's own logo at the top of the registration page, in the
+ * same size/position the Indian flag emoji used to occupy. To use your own
+ * logo: upload an image file to `public/images/school-logo.png` in the
+ * project (via GitHub's "Add file -> Upload files", a single image file —
+ * this is unaffected by the earlier ".github folder" upload issue, since
+ * it's just one ordinary file in an ordinary folder). Until that file is
+ * uploaded, this automatically falls back to showing the 🇮🇳 flag emoji
+ * instead of a broken image icon.
+ */
+function SchoolLogo() {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return <div className="inline-block text-5xl mb-3">🇮🇳</div>;
+  }
+
+  return (
+    <img
+      src={`${BASE_PATH}/images/school-logo.png`}
+      alt={SCHOOL_NAME}
+      // Sized to match the footprint of the 🇮🇳 flag emoji it replaces
+      // (which rendered at roughly 48-56px via the "text-5xl" class).
+      className="inline-block h-14 w-14 object-contain mb-3 rounded-full bg-white shadow-md ring-1 ring-slate-200 p-1"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 export default function HomePage() {
   const router = useRouter();
   const [checkingExisting, setCheckingExisting] = useState(true);
@@ -66,7 +99,7 @@ export default function HomePage() {
     <main className="min-h-screen confetti-bg flex flex-col items-center justify-center p-4 py-10">
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
-          <div className="inline-block text-5xl mb-3">🇮🇳</div>
+          <SchoolLogo />
           <p className="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">{SCHOOL_NAME}</p>
           <h1 className="mt-1 text-3xl md:text-4xl font-black bg-gradient-to-r from-orange-600 via-rose-600 to-purple-600 bg-clip-text text-transparent leading-tight">
             {EVENT_NAME}
