@@ -37,8 +37,8 @@ export function PassportCard({ name, classSection, passportNumber, issuedOn }: P
         </div>
         <div className="mt-1 h-px w-32 bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
 
-        <div className="mt-5 flex items-center justify-center gap-2">
-          <IndiaTricolorMap className="h-16 w-14 drop-shadow" />
+        <div className="mt-5 flex items-center justify-center gap-3">
+          <IndiaTricolorMap className="h-12 w-[72px] rounded-[3px] drop-shadow ring-1 ring-black/10" />
           <div className="flex flex-col items-start">
             <span className="text-2xl font-black text-amber-300 leading-none">{BRAND_YEAR}</span>
             <span className="text-amber-400 text-xl leading-none">↗</span>
