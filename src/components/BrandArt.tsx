@@ -69,42 +69,53 @@ export function AshokaChakra({ className = "h-8 w-8" }: { className?: string }) 
   );
 }
 
-/** Stylised India map silhouette filled with the tricolour, inspired by the reference art */
+/**
+ * The Indian national flag (Tiranga) as a simple rectangle, drawn to the
+ * official 3:2 width:height proportion. Kept as a plain flag rectangle
+ * (rather than attempting an India-map silhouette, which was hard to read
+ * clearly at small sizes) so all three colour bands and the 24-spoke Ashoka
+ * Chakra are always clearly visible even at the small size this renders at
+ * on the passport card.
+ */
 export function IndiaTricolorMap({ className = "h-16 w-16" }: { className?: string }) {
+  // Official flag proportions: width:height = 3:2. viewBox chosen as
+  // 150 x 100 to match that ratio exactly; the chakra sits centred in the
+  // white middle band with a radius sized per flag convention (~3/4 of the
+  // white band's height).
+  const chakraRadius = 15;
+
   return (
-    <svg viewBox="0 0 120 140" className={className}>
-      <defs>
-        <clipPath id="indiaClip">
-          <path d="M55 4c10 2 16 10 22 14 8 5 16 4 20 10 3 5-2 10-7 12-4 2-4 7-1 11 4 5 10 6 10 13 0 8-9 10-14 16-4 5-2 12-8 16-5 4-13 1-16 7-3 6 2 13-4 17-5 4-12 0-16-4-5-5-4-12-10-15-6-3-14 1-18-4-4-5 1-11-2-17-3-5-10-5-12-11-2-6 4-10 3-16-1-6-8-8-7-14 1-6 9-7 12-12 3-5-1-11 4-15 5-4 12 0 17-4 4-4 2-10 7-13 4-3 11-2 20-1z" />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#indiaClip)">
-        <rect x="0" y="0" width="120" height="47" fill="#FF9933" />
-        <rect x="0" y="47" width="120" height="46" fill="#FFFFFF" />
-        <rect x="0" y="93" width="120" height="47" fill="#128807" />
-        <circle cx="60" cy="70" r="9" fill="none" stroke="#000080" strokeWidth="1.6" />
-        {Array.from({ length: 24 }).map((_, i) => {
-          const angle = (i * 360) / 24;
-          const rad = (angle * Math.PI) / 180;
-          return (
-            <line
-              key={i}
-              x1={60 + 1.5 * Math.cos(rad)}
-              y1={70 + 1.5 * Math.sin(rad)}
-              x2={60 + 9 * Math.cos(rad)}
-              y2={70 + 9 * Math.sin(rad)}
-              stroke="#000080"
-              strokeWidth="0.8"
-            />
-          );
-        })}
-      </g>
-      <path
-        d="M55 4c10 2 16 10 22 14 8 5 16 4 20 10 3 5-2 10-7 12-4 2-4 7-1 11 4 5 10 6 10 13 0 8-9 10-14 16-4 5-2 12-8 16-5 4-13 1-16 7-3 6 2 13-4 17-5 4-12 0-16-4-5-5-4-12-10-15-6-3-14 1-18-4-4-5 1-11-2-17-3-5-10-5-12-11-2-6 4-10 3-16-1-6-8-8-7-14 1-6 9-7 12-12 3-5-1-11 4-15 5-4 12 0 17-4 4-4 2-10 7-13 4-3 11-2 20-1z"
+    <svg viewBox="0 0 150 100" className={className}>
+      <rect x="0" y="0" width="150" height="100" fill="#ffffff" />
+      <rect x="0" y="0" width="150" height="33.33" fill="#FF9933" />
+      <rect x="0" y="66.67" width="150" height="33.34" fill="#128807" />
+      <rect
+        x="0.5"
+        y="0.5"
+        width="149"
+        height="99"
         fill="none"
         stroke="#92400e"
-        strokeWidth="1.5"
+        strokeOpacity="0.25"
+        strokeWidth="1"
       />
+      <circle cx="75" cy="50" r={chakraRadius} fill="none" stroke="#000080" strokeWidth="2" />
+      <circle cx="75" cy="50" r="2.2" fill="#000080" />
+      {Array.from({ length: 24 }).map((_, i) => {
+        const angle = (i * 360) / 24;
+        const rad = (angle * Math.PI) / 180;
+        return (
+          <line
+            key={i}
+            x1={75 + 2.5 * Math.cos(rad)}
+            y1={50 + 2.5 * Math.sin(rad)}
+            x2={75 + chakraRadius * Math.cos(rad)}
+            y2={50 + chakraRadius * Math.sin(rad)}
+            stroke="#000080"
+            strokeWidth="1"
+          />
+        );
+      })}
     </svg>
   );
 }
